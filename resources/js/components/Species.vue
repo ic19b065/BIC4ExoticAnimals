@@ -1,26 +1,22 @@
 <template>
-
-
     <div>
-        <!-- <h2>Animals</h2> -->
+        <!-- <h2>Species</h2> -->
         <table border="1">
             <tr>
                 <th>ID</th>
-                <th>Name</th>
                 <th>Slug</th>
+                <th>Name</th>
                 <th>Description</th>
-                <th>Species-ID</th>
                 <th>Created at</th>
                 <th>Updated at</th>
             </tr>
-            <tr v-for="animal in animals">
-                <td>{{ animal.id }}</td>
-                <td>{{ animal.name }}</td>
-                <td>{{ animal.slug }}</td>
-                <td>{{ animal.description }}</td>
-                <td>{{ animal.species_id }}</td>
-                <td>{{ animal.created_at }}</td>
-                <td>{{ animal.updated_at }}</td>
+            <tr v-for="specie in species">
+                <td>{{ specie.id }}</td>
+                <td>{{ specie.slug }}</td>
+                <td>{{ specie.name }}</td>
+                <td>{{ specie.description }}</td>
+                <td>{{ specie.created_at }}</td>
+                <td>{{ specie.updated_at }}</td>
             </tr>
         </table>
 
@@ -30,31 +26,29 @@
     export default {
         data() {
             return {
-                animals: [],
-                animal: {
+                species: [],
+                specie: {
                     id: '',
-                    name: '',
                     slug: '',
-                    species: '',
+                    name: '',
                     description: '',
-                    species_id: '',
                     created_at: '',
                     updated_at: ''
                 },
-                animal_id: ''
+                species_id: ''
             }
         },
 
         created() {
-            this.fetchAnimals();
+            this.fetchSpecies();
         },
         methods: {
-            fetchAnimals() {
-                fetch('list/animal')
+            fetchSpecies() {
+                fetch('list/species')
                     .then(res => res.json())
                     .then(res => {
                         console.log(res);
-                        this.animals=res;
+                        this.species=res;
                     })
 
             },
