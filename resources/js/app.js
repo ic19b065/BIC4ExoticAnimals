@@ -27,6 +27,7 @@ Vue.component('query-message', require('./components/base/QueryMessage.vue').def
 Vue.component('animals', require('./components/Animals.vue').default);
 Vue.component('species', require('./components/Species.vue').default);
 Vue.component('createanimal', require('./components/CreateAnimal').default);
+Vue.component('createspecies', require('./components/CreateSpecies').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
