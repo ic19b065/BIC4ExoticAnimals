@@ -142,7 +142,7 @@
 
     <footer class="footer">
         <div class="content has-text-centered">
-            <small>Here comes some footer</small>
+            <small>Register of exotic animals - FH Technikum Wien (IE) 2020</small>
         </div>
     </footer>
 </div>

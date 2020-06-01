@@ -49,6 +49,7 @@
                     })
                 .catch(e => {
                     console.log(e);
+                    alert('Creation not successful!');
                 });
 
             }
