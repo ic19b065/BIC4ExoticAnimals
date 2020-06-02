@@ -1936,6 +1936,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1994,15 +2001,54 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var form = new Form({
   'name': '',
   'description': '',
-  'species_id': ''
+  'species_id': '',
+  'noReset': ['animal_id']
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CreateAnimalComponent",
   components: {
     QueryMessage: QueryMessage
+  },
+  props: {
+    isEditable: {
+      required: false,
+      type: Boolean,
+      "default": false
+    },
+    currentAnimal: {
+      required: false,
+      type: Object
+    }
   },
   data: function data() {
     return {
@@ -2014,22 +2060,28 @@ var form = new Form({
     submit: function submit() {
       var _this = this;
 
-      this.form.post(this.url).then(function (response) {
-        _this.url = '/animal/' + response.slug; //this.url = '/animal';
-
+      if (this.edit) this.form.put(this.url);else this.form.post(this.url).then(function (response) {
+        _this.url = '/animal/' + response.slug;
         _this.form.name = response.name;
         _this.form.description = response.description;
         _this.form.species_id = response.species_id;
-        _this.form.noReset = ['id', 'name', 'species', 'description', 'species_id', 'created_at', 'updated_at'];
-        alert('Animal created!');
-      })["catch"](function (e) {
-        console.log(e);
-        alert('Creation not successful!');
+        _this.form.noReset = ['name', 'description', 'species_id'];
+        _this.edit = true;
       });
     }
   },
   created: function created() {
-    this.url = '/animal';
+    this.edit = this.isEditable;
+
+    if (this.edit) {
+      this.url = '/animal/' + this.currentAnimal.slug;
+      this.form.name = this.currentAnimal.name;
+      this.form.description = this.currentAnimal.description;
+      this.form.species_id = this.currentAnimal.species_id;
+      this.form.noReset = ['name', 'description', 'species_id'];
+    } else {
+      this.url = '/animal';
+    }
   }
 });
 
@@ -2200,6 +2252,83 @@ var form = new Form({
       fetch('http://localhost:8000/list/animal').then(function (res) {
         return res.json();
       }).then(function (res) {
+        console.log(res);
+        _this.animals = res;
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ShowAnimal.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ShowAnimal.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var form = new Form({
+  'name': ''
+});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      animals: [],
+      animal: {
+        id: '',
+        name: '',
+        slug: '',
+        species: '',
+        description: '',
+        species_id: '',
+        created_at: '',
+        updated_at: ''
+      },
+      animal_id: '',
+      form: form,
+      url: ''
+    };
+  },
+  methods: {
+    submit: function submit() {
+      var _this = this;
+
+      fetch('http://localhost:8000/animal/' + this.form.slug) //.then(res => res.json())
+      .then(function (res) {
         console.log(res);
         _this.animals = res;
       });
@@ -19939,7 +20068,21 @@ var render = function() {
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(animal.created_at))]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(animal.updated_at))])
+            _c("td", [_vm._v(_vm._s(animal.updated_at))]),
+            _vm._v(" "),
+            _c("td", [
+              _c("p", { staticClass: "buttons" }, [
+                _vm._v("Edit\n                    "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "button is-info is-outlined is-small",
+                    attrs: { href: "/animal/" + animal.slug + "/edit" }
+                  },
+                  [_vm._m(1, true)]
+                )
+              ])
+            ])
           ])
         })
       ],
@@ -19967,6 +20110,14 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Updated at")])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "icon" }, [
+      _c("i", { staticClass: "fa fa-edit" })
+    ])
   }
 ]
 render._withStripped = true
@@ -19990,101 +20141,171 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "form",
-      {
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.submit($event)
+  return _c(
+    "div",
+    [
+      _c("header", { staticClass: "card-header" }, [
+        _c("h1", {
+          staticClass: "card-header-title is-centered",
+          domProps: {
+            textContent: _vm._s(_vm.edit ? _vm.form.title : "New Animal")
           }
+        })
+      ]),
+      _vm._v(" "),
+      _c("query-message", {
+        attrs: {
+          success: _vm.form.isSuccess(),
+          fail: _vm.form.isFail(),
+          message: _vm.form.failMessage || _vm.form.successMessage
         }
-      },
-      [
-        _c("div", [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.form.name,
-                expression: "form.name"
-              }
-            ],
-            staticClass: "input",
-            class: { "is-danger": _vm.form.errors.has("name") },
-            attrs: { id: "name", type: "text", placeholder: "Name" },
-            domProps: { value: _vm.form.name },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.form, "name", $event.target.value)
-              }
+      }),
+      _vm._v(" "),
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.submit($event)
             }
-          }),
+          }
+        },
+        [
+          !_vm.edit
+            ? _c("div", { staticClass: "field" }, [
+                _c("label", { staticClass: "label", attrs: { for: "name" } }, [
+                  _vm._v("Name")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "control" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.name,
+                        expression: "form.name"
+                      }
+                    ],
+                    staticClass: "input",
+                    class: { "is-danger": _vm.form.errors.has("name") },
+                    attrs: { id: "name", type: "text", autofocus: "" },
+                    domProps: { value: _vm.form.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "name", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _vm.form.errors.has("name")
+                  ? _c("p", {
+                      staticClass: "help is-danger",
+                      domProps: {
+                        textContent: _vm._s(_vm.form.errors.get("name"))
+                      }
+                    })
+                  : _vm._e()
+              ])
+            : _vm._e(),
           _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.form.description,
-                expression: "form.description"
-              }
-            ],
-            staticClass: "input",
-            class: { "is-danger": _vm.form.errors.has("description") },
-            attrs: {
-              id: "description",
-              type: "text",
-              placeholder: "Description"
-            },
-            domProps: { value: _vm.form.description },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+          _c("div", { staticClass: "field" }, [
+            _c(
+              "label",
+              { staticClass: "label", attrs: { for: "description" } },
+              [_vm._v("Description")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "control" }, [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.description,
+                    expression: "form.description"
+                  }
+                ],
+                staticClass: "textarea",
+                attrs: { id: "description" },
+                domProps: { value: _vm.form.description },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "description", $event.target.value)
+                  }
                 }
-                _vm.$set(_vm.form, "description", $event.target.value)
-              }
-            }
-          }),
+              })
+            ]),
+            _vm._v(" "),
+            _vm.form.errors.has("description")
+              ? _c("p", {
+                  staticClass: "help is-danger",
+                  domProps: {
+                    textContent: _vm._s(_vm.form.errors.get("description"))
+                  }
+                })
+              : _vm._e()
+          ]),
           _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.form.species_id,
-                expression: "form.species_id"
-              }
-            ],
-            staticClass: "input",
-            class: { "is-danger": _vm.form.errors.has("species_id") },
-            attrs: {
-              id: "species_id",
-              type: "text",
-              placeholder: "Species ID"
-            },
-            domProps: { value: _vm.form.species_id },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+          _c("div", { staticClass: "field" }, [
+            _c(
+              "label",
+              { staticClass: "label", attrs: { for: "species_id" } },
+              [_vm._v("Species ID")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "control" }, [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.species_id,
+                    expression: "form.species_id"
+                  }
+                ],
+                staticClass: "input",
+                attrs: { id: "species_id" },
+                domProps: { value: _vm.form.species_id },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "species_id", $event.target.value)
+                  }
                 }
-                _vm.$set(_vm.form, "species_id", $event.target.value)
-              }
-            }
+              })
+            ]),
+            _vm._v(" "),
+            _vm.form.errors.has("species_id")
+              ? _c("p", {
+                  staticClass: "help is-danger",
+                  domProps: {
+                    textContent: _vm._s(_vm.form.errors.get("species_id"))
+                  }
+                })
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("button", {
+            staticClass: "button is-large is-primary is-outlined is-fullwidth",
+            attrs: { type: "submit" },
+            domProps: { textContent: _vm._s(_vm.edit ? "Save" : "Create") }
           })
-        ]),
-        _vm._v(" "),
-        _c("button", { attrs: { type: "submit" } }, [_vm._v("create")])
-      ]
-    )
-  ])
+        ]
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -20308,6 +20529,118 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("button", { attrs: { type: "submit" } }, [_vm._v("search")])
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("ID")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Name")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Slug")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Description")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Species-ID")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Created at")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Updated at")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ShowAnimal.vue?vue&type=template&id=063888f8&":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ShowAnimal.vue?vue&type=template&id=063888f8& ***!
+  \*************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "table",
+      { attrs: { border: "1" } },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _vm._l(_vm.animals, function(animal) {
+          return _c("tr", [
+            _c("td", [_vm._v(_vm._s(animal.id))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(animal.name))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(animal.slug))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(animal.description))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(animal.species_id))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(animal.created_at))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(animal.updated_at))])
+          ])
+        })
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.submit($event)
+          }
+        }
+      },
+      [
+        _c("div", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.slug,
+                expression: "form.slug"
+              }
+            ],
+            staticClass: "input",
+            class: { "is-danger": _vm.form.errors.has("slug") },
+            attrs: { id: "slug", type: "text", placeholder: "Slug" },
+            domProps: { value: _vm.form.slug },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form, "slug", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("button", { attrs: { type: "submit" } }, [_vm._v("show")])
       ]
     )
   ])
@@ -37447,6 +37780,7 @@ Vue.component('species', __webpack_require__(/*! ./components/Species.vue */ "./
 Vue.component('createanimal', __webpack_require__(/*! ./components/CreateAnimal.vue */ "./resources/js/components/CreateAnimal.vue")["default"]);
 Vue.component('createspecies', __webpack_require__(/*! ./components/CreateSpecies.vue */ "./resources/js/components/CreateSpecies.vue")["default"]);
 Vue.component('searchanimal', __webpack_require__(/*! ./components/SearchAnimal.vue */ "./resources/js/components/SearchAnimal.vue")["default"]);
+Vue.component('showanimal', __webpack_require__(/*! ./components/ShowAnimal.vue */ "./resources/js/components/ShowAnimal.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -37857,6 +38191,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchAnimal_vue_vue_type_template_id_041e18a2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchAnimal_vue_vue_type_template_id_041e18a2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ShowAnimal.vue":
+/*!************************************************!*\
+  !*** ./resources/js/components/ShowAnimal.vue ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ShowAnimal_vue_vue_type_template_id_063888f8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ShowAnimal.vue?vue&type=template&id=063888f8& */ "./resources/js/components/ShowAnimal.vue?vue&type=template&id=063888f8&");
+/* harmony import */ var _ShowAnimal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ShowAnimal.vue?vue&type=script&lang=js& */ "./resources/js/components/ShowAnimal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ShowAnimal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ShowAnimal_vue_vue_type_template_id_063888f8___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ShowAnimal_vue_vue_type_template_id_063888f8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ShowAnimal.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ShowAnimal.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/ShowAnimal.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowAnimal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ShowAnimal.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ShowAnimal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowAnimal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ShowAnimal.vue?vue&type=template&id=063888f8&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/ShowAnimal.vue?vue&type=template&id=063888f8& ***!
+  \*******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowAnimal_vue_vue_type_template_id_063888f8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ShowAnimal.vue?vue&type=template&id=063888f8& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ShowAnimal.vue?vue&type=template&id=063888f8&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowAnimal_vue_vue_type_template_id_063888f8___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowAnimal_vue_vue_type_template_id_063888f8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

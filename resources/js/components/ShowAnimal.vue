@@ -1,7 +1,6 @@
 <template>
-
     <div>
-        <!-- <h2>Animals</h2> -->
+        <!-- <h2>Show Animals</h2> -->
         <table border="1">
             <tr>
                 <th>ID</th>
@@ -20,20 +19,20 @@
                 <td>{{ animal.species_id }}</td>
                 <td>{{ animal.created_at }}</td>
                 <td>{{ animal.updated_at }}</td>
-                <td>
-                    <p class="buttons">Edit
-                        <a :href="'/animal/' + animal.slug + '/edit'" class="button is-info is-outlined is-small">
-                            <span class="icon">
-                              <i class="fa fa-edit"></i>
-                            </span>
-                        </a>
-                    </p>
-                </td>
             </tr>
         </table>
+        <form @submit.prevent="submit">
+            <div>
+                <input id="slug" class="input" type="text" placeholder="Slug" v-model="form.slug" v-bind:class="{ 'is-danger': form.errors.has('slug')}">
+            </div>
+            <button type="submit">show</button>
+        </form>
     </div>
 </template>
 <script>
+    let form = new Form({
+        'name': '',
+    });
     export default {
         data() {
             return {
@@ -48,23 +47,22 @@
                     created_at: '',
                     updated_at: ''
                 },
-                animal_id: ''
+                animal_id: '',
+                form: form,
+                url: ''
             }
         },
 
-        created() {
-            this.fetchAnimals();
-        },
         methods: {
-            fetchAnimals() {
-                fetch('list/animal')
-                    .then(res => res.json())
+            submit() {
+                fetch('http://localhost:8000/animal/' + this.form.slug)
+                    //.then(res => res.json())
                     .then(res => {
                         console.log(res);
                         this.animals=res;
                     })
 
-            }
+            },
 
         }
     }

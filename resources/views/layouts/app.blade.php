@@ -81,6 +81,7 @@
                                href="{{ route('animal.search') }}">
                                 Search
                             </a>
+
                         </div>
                     </div>
 
