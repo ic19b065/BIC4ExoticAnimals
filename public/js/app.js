@@ -2108,14 +2108,47 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var form = new Form({
   'name': '',
-  'description': ''
+  'description': '',
+  'noReset': ['animal_id']
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CreateSpeciesComponent",
   components: {
     QueryMessage: QueryMessage
+  },
+  props: {
+    isEditable: {
+      required: false,
+      type: Boolean,
+      "default": false
+    },
+    currentSpecies: {
+      required: false,
+      type: Object
+    }
   },
   data: function data() {
     return {
@@ -2127,20 +2160,26 @@ var form = new Form({
     submit: function submit() {
       var _this = this;
 
-      this.form.post(this.url).then(function (response) {
+      if (this.edit) this.form.put(this.url);else this.form.post(this.url).then(function (response) {
         _this.url = '/species/' + response.slug;
         _this.form.name = response.name;
         _this.form.description = response.description;
-        _this.form.noReset = ['id', 'name', 'species', 'description', 'created_at', 'updated_at'];
-        alert('Species created!');
-      })["catch"](function (e) {
-        console.log(e);
-        alert('Creation not successful!');
+        _this.form.noReset = ['name', 'description'];
+        _this.edit = true;
       });
     }
   },
   created: function created() {
-    this.url = '/species';
+    this.edit = this.isEditable;
+
+    if (this.edit) {
+      this.url = '/species/' + this.currentSpecies.slug;
+      this.form.name = this.currentSpecies.name;
+      this.form.description = this.currentSpecies.description;
+      this.form.noReset = ['name', 'description'];
+    } else {
+      this.url = '/species';
+    }
   }
 });
 
@@ -2347,6 +2386,15 @@ var form = new Form({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -20329,74 +20377,130 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "form",
-      {
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.submit($event)
+  return _c(
+    "div",
+    [
+      _c("header", { staticClass: "card-header" }, [
+        _c("h1", {
+          staticClass: "card-header-title is-centered",
+          domProps: {
+            textContent: _vm._s(_vm.edit ? _vm.form.title : "New Species")
           }
+        })
+      ]),
+      _vm._v(" "),
+      _c("query-message", {
+        attrs: {
+          success: _vm.form.isSuccess(),
+          fail: _vm.form.isFail(),
+          message: _vm.form.failMessage || _vm.form.successMessage
         }
-      },
-      [
-        _c("div", [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.form.name,
-                expression: "form.name"
-              }
-            ],
-            staticClass: "input",
-            class: { "is-danger": _vm.form.errors.has("name") },
-            attrs: { id: "name", type: "text", placeholder: "Name" },
-            domProps: { value: _vm.form.name },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.form, "name", $event.target.value)
-              }
+      }),
+      _vm._v(" "),
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.submit($event)
             }
-          }),
+          }
+        },
+        [
+          !_vm.edit
+            ? _c("div", { staticClass: "field" }, [
+                _c("label", { staticClass: "label", attrs: { for: "name" } }, [
+                  _vm._v("Name")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "control" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.name,
+                        expression: "form.name"
+                      }
+                    ],
+                    staticClass: "input",
+                    class: { "is-danger": _vm.form.errors.has("name") },
+                    attrs: { id: "name", type: "text", autofocus: "" },
+                    domProps: { value: _vm.form.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "name", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _vm.form.errors.has("name")
+                  ? _c("p", {
+                      staticClass: "help is-danger",
+                      domProps: {
+                        textContent: _vm._s(_vm.form.errors.get("name"))
+                      }
+                    })
+                  : _vm._e()
+              ])
+            : _vm._e(),
           _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.form.description,
-                expression: "form.description"
-              }
-            ],
-            staticClass: "input",
-            class: { "is-danger": _vm.form.errors.has("description") },
-            attrs: {
-              id: "description",
-              type: "text",
-              placeholder: "Description"
-            },
-            domProps: { value: _vm.form.description },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+          _c("div", { staticClass: "field" }, [
+            _c(
+              "label",
+              { staticClass: "label", attrs: { for: "description" } },
+              [_vm._v("Description")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "control" }, [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.description,
+                    expression: "form.description"
+                  }
+                ],
+                staticClass: "textarea",
+                attrs: { id: "description" },
+                domProps: { value: _vm.form.description },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "description", $event.target.value)
+                  }
                 }
-                _vm.$set(_vm.form, "description", $event.target.value)
-              }
-            }
+              })
+            ]),
+            _vm._v(" "),
+            _vm.form.errors.has("description")
+              ? _c("p", {
+                  staticClass: "help is-danger",
+                  domProps: {
+                    textContent: _vm._s(_vm.form.errors.get("description"))
+                  }
+                })
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("button", {
+            staticClass: "button is-large is-primary is-outlined is-fullwidth",
+            attrs: { type: "submit" },
+            domProps: { textContent: _vm._s(_vm.edit ? "Save" : "Create") }
           })
-        ]),
-        _vm._v(" "),
-        _c("button", { attrs: { type: "submit" } }, [_vm._v("create")])
-      ]
-    )
-  ])
+        ]
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -20707,7 +20811,21 @@ var render = function() {
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(specie.created_at))]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(specie.updated_at))])
+            _c("td", [_vm._v(_vm._s(specie.updated_at))]),
+            _vm._v(" "),
+            _c("td", [
+              _c("p", { staticClass: "buttons" }, [
+                _vm._v("Edit\n                    "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "button is-info is-outlined is-small",
+                    attrs: { href: "/species/" + specie.slug + "/edit" }
+                  },
+                  [_vm._m(1, true)]
+                )
+              ])
+            ])
           ])
         })
       ],
@@ -20732,6 +20850,14 @@ var staticRenderFns = [
       _c("th", [_vm._v("Created at")]),
       _vm._v(" "),
       _c("th", [_vm._v("Updated at")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "icon" }, [
+      _c("i", { staticClass: "fa fa-edit" })
     ])
   }
 ]

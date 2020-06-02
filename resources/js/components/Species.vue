@@ -17,6 +17,15 @@
                 <td>{{ specie.description }}</td>
                 <td>{{ specie.created_at }}</td>
                 <td>{{ specie.updated_at }}</td>
+                <td>
+                    <p class="buttons">Edit
+                        <a :href="'/species/' + specie.slug + '/edit'" class="button is-info is-outlined is-small">
+                            <span class="icon">
+                              <i class="fa fa-edit"></i>
+                            </span>
+                        </a>
+                    </p>
+                </td>
             </tr>
         </table>
 
