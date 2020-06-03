@@ -21,9 +21,10 @@
                 <td>{{ animal.created_at }}</td>
                 <td>{{ animal.updated_at }}</td>
                 <td>
-                    <p class="buttons">Edit
-                        <a :href="'/animal/' + animal.slug + '/edit'" class="button is-info is-outlined is-small">
+                    <p class="buttons">
+                        <a :href="'/animal/' + animal.slug + '/edit'" class="button is-info is-outlined">
                             <span class="icon">
+                                Edit
                               <i class="fa fa-edit"></i>
                             </span>
                         </a>
@@ -64,6 +65,10 @@
                         this.animals=res;
                     })
 
+            },
+            submit()    {
+                this.animal.delete(`/animal/$(animal.slug`);
+                alert('Animal deleted');
             }
 
         }

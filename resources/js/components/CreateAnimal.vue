@@ -88,6 +88,8 @@
 
                             this.edit = true;
                         });
+                alert('Animal saved!');
+
             }
         },
         created() {

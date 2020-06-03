@@ -1943,6 +1943,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1973,6 +1974,10 @@ __webpack_require__.r(__webpack_exports__);
         console.log(res);
         _this.animals = res;
       });
+    },
+    submit: function submit() {
+      this.animal["delete"]("/animal/$(animal.slug");
+      alert('Animal deleted');
     }
   }
 });
@@ -2068,6 +2073,7 @@ var form = new Form({
         _this.form.noReset = ['name', 'description', 'species_id'];
         _this.edit = true;
       });
+      alert('Animal saved!');
     }
   },
   created: function created() {
@@ -2167,6 +2173,7 @@ var form = new Form({
         _this.form.noReset = ['name', 'description'];
         _this.edit = true;
       });
+      alert('Species saved!');
     }
   },
   created: function created() {
@@ -2386,6 +2393,7 @@ var form = new Form({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -20120,11 +20128,10 @@ var render = function() {
             _vm._v(" "),
             _c("td", [
               _c("p", { staticClass: "buttons" }, [
-                _vm._v("Edit\n                    "),
                 _c(
                   "a",
                   {
-                    staticClass: "button is-info is-outlined is-small",
+                    staticClass: "button is-info is-outlined",
                     attrs: { href: "/animal/" + animal.slug + "/edit" }
                   },
                   [_vm._m(1, true)]
@@ -20164,6 +20171,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "icon" }, [
+      _vm._v("\n                            Edit\n                          "),
       _c("i", { staticClass: "fa fa-edit" })
     ])
   }
@@ -20815,11 +20823,10 @@ var render = function() {
             _vm._v(" "),
             _c("td", [
               _c("p", { staticClass: "buttons" }, [
-                _vm._v("Edit\n                    "),
                 _c(
                   "a",
                   {
-                    staticClass: "button is-info is-outlined is-small",
+                    staticClass: "button is-info is-outlined",
                     attrs: { href: "/species/" + specie.slug + "/edit" }
                   },
                   [_vm._m(1, true)]
@@ -20857,6 +20864,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "icon" }, [
+      _vm._v("\n                            Edit\n                          "),
       _c("i", { staticClass: "fa fa-edit" })
     ])
   }

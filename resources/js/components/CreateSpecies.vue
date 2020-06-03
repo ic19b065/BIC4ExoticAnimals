@@ -79,6 +79,8 @@
 
                             this.edit = true;
                         });
+                alert('Species saved!');
+                
             }
         },
         created() {
