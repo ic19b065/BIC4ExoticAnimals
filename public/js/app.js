@@ -2033,6 +2033,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 var form = new Form({
   'name': '',
   'description': '',
@@ -2073,7 +2076,10 @@ var form = new Form({
         _this.form.noReset = ['name', 'description', 'species_id'];
         _this.edit = true;
       });
-      alert('Animal saved!');
+      alert('Done!');
+    },
+    delete_animal: function delete_animal() {
+      this.form["delete"]('/animal/' + this.currentAnimal.slug);
     }
   },
   created: function created() {
@@ -2102,6 +2108,9 @@ var form = new Form({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -2173,7 +2182,10 @@ var form = new Form({
         _this.form.noReset = ['name', 'description'];
         _this.edit = true;
       });
-      alert('Species saved!');
+      alert('Done!');
+    },
+    delete_species: function delete_species() {
+      this.form["delete"]('/species/' + this.currentSpecies.slug);
     }
   },
   created: function created() {
@@ -20356,7 +20368,21 @@ var render = function() {
             staticClass: "button is-large is-primary is-outlined is-fullwidth",
             attrs: { type: "submit" },
             domProps: { textContent: _vm._s(_vm.edit ? "Save" : "Create") }
-          })
+          }),
+          _vm._v(" "),
+          _vm.edit
+            ? _c("div", [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "button is-danger is-large is-primary is-outlined is-fullwidth",
+                    on: { click: _vm.delete_animal }
+                  },
+                  [_vm._v("Delete")]
+                )
+              ])
+            : _vm._e()
         ]
       )
     ],
@@ -20503,7 +20529,21 @@ var render = function() {
             staticClass: "button is-large is-primary is-outlined is-fullwidth",
             attrs: { type: "submit" },
             domProps: { textContent: _vm._s(_vm.edit ? "Save" : "Create") }
-          })
+          }),
+          _vm._v(" "),
+          _vm.edit
+            ? _c("div", [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "button is-danger is-large is-primary is-outlined is-fullwidth",
+                    on: { click: _vm.delete_species }
+                  },
+                  [_vm._v("Delete")]
+                )
+              ])
+            : _vm._e()
         ]
       )
     ],

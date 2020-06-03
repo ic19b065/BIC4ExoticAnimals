@@ -28,6 +28,9 @@
             </div>
 
             <button type="submit" class="button is-large is-primary is-outlined is-fullwidth" v-text="edit ? 'Save' : 'Create'" />
+            <div v-if="edit">
+                <button @click="delete_species" class="button is-danger is-large is-primary is-outlined is-fullwidth">Delete</button>
+            </div>
         </form>
     </div>
 </template>
@@ -79,8 +82,11 @@
 
                             this.edit = true;
                         });
-                alert('Species saved!');
-                
+                alert('Done!');
+
+            },
+            delete_species () {
+                this.form.delete('/species/' + this.currentSpecies.slug);
             }
         },
         created() {

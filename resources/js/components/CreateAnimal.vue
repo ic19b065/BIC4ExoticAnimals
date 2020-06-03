@@ -35,6 +35,9 @@
             </div>
 
             <button type="submit" class="button is-large is-primary is-outlined is-fullwidth" v-text="edit ? 'Save' : 'Create'" />
+            <div v-if="edit">
+                <button @click="delete_animal" class="button is-danger is-large is-primary is-outlined is-fullwidth">Delete</button>
+            </div>
         </form>
     </div>
 </template>
@@ -88,8 +91,11 @@
 
                             this.edit = true;
                         });
-                alert('Animal saved!');
+                alert('Done!');
 
+            },
+            delete_animal () {
+                this.form.delete('/animal/' + this.currentAnimal.slug);
             }
         },
         created() {
