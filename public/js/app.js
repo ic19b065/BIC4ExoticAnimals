@@ -1944,6 +1944,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2339,58 +2348,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 var form = new Form({
-  'name': ''
+  'id': '',
+  'name': '',
+  'slug': '',
+  'description': '',
+  'species_id': '',
+  'created_at': '',
+  'updated_at': '',
+  'noReset': ['animal_id']
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: "ShowAnimalComponent",
+  components: {
+    QueryMessage: QueryMessage
+  },
+  props: {
+    currentAnimal: {
+      currentAnimal: {
+        required: false,
+        type: Object
+      }
+    }
+  },
   data: function data() {
     return {
-      animals: [],
-      animal: {
-        id: '',
-        name: '',
-        slug: '',
-        species: '',
-        description: '',
-        species_id: '',
-        created_at: '',
-        updated_at: ''
-      },
-      animal_id: '',
       form: form,
       url: ''
     };
   },
-  methods: {
-    submit: function submit() {
-      var _this = this;
-
-      fetch('http://localhost:8000/animal/' + this.form.slug) //.then(res => res.json())
-      .then(function (res) {
-        console.log(res);
-        _this.animals = res;
-      });
-    }
+  created: function created() {
+    this.url = '/animal/' + this.currentAnimal.slug;
+    this.form.id = this.currentAnimal.id;
+    this.form.name = this.currentAnimal.name;
+    this.form.slug = this.currentAnimal.slug;
+    this.form.description = this.currentAnimal.description;
+    this.form.species_id = this.currentAnimal.species_id;
+    this.form.created_at = this.currentAnimal.created_at;
+    this.form.updated_at = this.currentAnimal.updated_at;
+    this.form.noReset = ['id', 'name', 'description', 'species_id', 'created_at', 'updated_at'];
   }
 });
 
@@ -20149,6 +20145,25 @@ var render = function() {
                   [_vm._m(1, true)]
                 )
               ])
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("p", { staticClass: "buttons" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "button is-info is-outlined",
+                    attrs: { href: "/animal/" + animal.slug }
+                  },
+                  [
+                    _c("span", { staticClass: "icon" }, [
+                      _vm._v(
+                        "\n                            Show\n                        "
+                      )
+                    ])
+                  ]
+                )
+              ])
             ])
           ])
         })
@@ -20729,96 +20744,34 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "table",
-      { attrs: { border: "1" } },
-      [
-        _vm._m(0),
-        _vm._v(" "),
-        _vm._l(_vm.animals, function(animal) {
-          return _c("tr", [
-            _c("td", [_vm._v(_vm._s(animal.id))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(animal.name))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(animal.slug))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(animal.description))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(animal.species_id))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(animal.created_at))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(animal.updated_at))])
-          ])
-        })
-      ],
-      2
-    ),
+    _c("h2", [_c("b", [_vm._v("ID:")]), _vm._v(" " + _vm._s(_vm.form.id))]),
     _vm._v(" "),
-    _c(
-      "form",
-      {
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.submit($event)
-          }
-        }
-      },
-      [
-        _c("div", [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.form.slug,
-                expression: "form.slug"
-              }
-            ],
-            staticClass: "input",
-            class: { "is-danger": _vm.form.errors.has("slug") },
-            attrs: { id: "slug", type: "text", placeholder: "Slug" },
-            domProps: { value: _vm.form.slug },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.form, "slug", $event.target.value)
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("button", { attrs: { type: "submit" } }, [_vm._v("show")])
-      ]
-    )
+    _c("h2", [_c("b", [_vm._v("Name:")]), _vm._v(" " + _vm._s(_vm.form.name))]),
+    _vm._v(" "),
+    _c("h2", [_c("b", [_vm._v("Slug:")]), _vm._v(" " + _vm._s(_vm.form.slug))]),
+    _vm._v(" "),
+    _c("h2", [
+      _c("b", [_vm._v("Description:")]),
+      _vm._v(" " + _vm._s(_vm.form.description))
+    ]),
+    _vm._v(" "),
+    _c("h2", [
+      _c("b", [_vm._v("Species-ID:")]),
+      _vm._v(" " + _vm._s(_vm.form.species_id))
+    ]),
+    _vm._v(" "),
+    _c("h2", [
+      _c("b", [_vm._v("Created at:")]),
+      _vm._v(" " + _vm._s(_vm.form.created_at))
+    ]),
+    _vm._v(" "),
+    _c("h2", [
+      _c("b", [_vm._v("Updated at:")]),
+      _vm._v(" " + _vm._s(_vm.form.updated_at))
+    ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("th", [_vm._v("ID")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Name")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Slug")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Description")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Species-ID")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Created at")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Updated at")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

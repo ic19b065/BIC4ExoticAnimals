@@ -30,6 +30,15 @@
                         </a>
                     </p>
                 </td>
+                <td>
+                    <p class="buttons">
+                        <a :href="'/animal/' + animal.slug" class="button is-info is-outlined">
+                            <span class="icon">
+                                Show
+                            </span>
+                        </a>
+                    </p>
+                </td>
             </tr>
         </table>
     </div>
