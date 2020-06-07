@@ -1,10 +1,9 @@
 <template>
     <div>
         <h2><b>ID:</b> {{form.id}}</h2>
-        <h2><b>Name:</b> {{form.name}}</h2>
         <h2><b>Slug:</b> {{form.slug}}</h2>
+        <h2><b>Name:</b> {{form.name}}</h2>
         <h2><b>Description:</b> {{form.description}}</h2>
-        <h2><b>Species-ID:</b> {{form.species_id}}</h2>
         <h2><b>Created at:</b> {{form.created_at}}</h2>
         <h2><b>Updated at:</b> {{form.updated_at}}</h2>
     </div>
@@ -12,13 +11,12 @@
 <script>
     let form = new Form({
         'id': '',
-        'name': '',
         'slug': '',
+        'name': '',
         'description': '',
-        'species_id': '',
         'created_at': '',
         'updated_at': '',
-        'noReset': ['animal_id']
+        'noReset': ['species_id']
     });
     export default {
         name: "ShowAnimalComponent",
@@ -26,8 +24,8 @@
             QueryMessage
         },
         props: {
-            currentAnimal: {
-                currentAnimal: {
+            currentSpecies: {
+                currentSpecies: {
                     required: false,
                     type: Object
                 }
@@ -40,16 +38,15 @@
             }
         },
         created() {
-            this.url = '/animal/' + this.currentAnimal.slug;
-            this.form.id = this.currentAnimal.id;
-            this.form.name = this.currentAnimal.name;
-            this.form.slug = this.currentAnimal.slug;
-            this.form.description = this.currentAnimal.description;
-            this.form.species_id = this.currentAnimal.species_id;
-            this.form.created_at = this.currentAnimal.created_at;
-            this.form.updated_at = this.currentAnimal.updated_at;
+            this.url = '/species/' + this.currentSpecies.slug;
+            this.form.id = this.currentSpecies.id;
+            this.form.slug = this.currentSpecies.slug;
+            this.form.name = this.currentSpecies.name;
+            this.form.description = this.currentSpecies.description;
+            this.form.created_at = this.currentSpecies.created_at;
+            this.form.updated_at = this.currentSpecies.updated_at;
 
-            this.form.noReset = ['id', 'name', 'slug', 'description', 'species_id', 'created_at', 'updated_at'];
+            this.form.noReset = ['id', 'slug', 'name', 'description', 'created_at', 'updated_at'];
 
         }
     }

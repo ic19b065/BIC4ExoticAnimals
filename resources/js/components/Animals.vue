@@ -25,7 +25,6 @@
                         <a :href="'/animal/' + animal.slug + '/edit'" class="button is-info is-outlined">
                             <span class="icon">
                                 Edit
-                              <i class="fa fa-edit"></i>
                             </span>
                         </a>
                     </p>

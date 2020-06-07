@@ -30,6 +30,7 @@ Vue.component('createanimal', require('./components/CreateAnimal.vue').default);
 Vue.component('createspecies', require('./components/CreateSpecies.vue').default);
 Vue.component('searchanimal', require('./components/SearchAnimal.vue').default);
 Vue.component('showanimal', require('./components/ShowAnimal.vue').default);
+Vue.component('showspecies', require('./components/ShowSpecies.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
