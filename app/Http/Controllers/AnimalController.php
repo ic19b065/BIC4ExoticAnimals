@@ -24,9 +24,9 @@ class AnimalController extends Controller
      */
     public function index()
     {
-        $animal = Animal::all()->load('species');
+        $animals = Animal::all()->load('species');
 
-        return view('animal.index', compact('animal'));
+        return view('animal.index', compact('animals'));
     }
 
     /**
