@@ -38960,8 +38960,8 @@ var Form = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Patrick Masch\OneDrive - FH Technikum Wien\FH\BIC4\IE\BIC4ExoticAnimals\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Patrick Masch\OneDrive - FH Technikum Wien\FH\BIC4\IE\BIC4ExoticAnimals\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Patrick Masch\OneDrive - FH Technikum Wien\fh\bic4\ie\BIC4ExoticAnimals\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Patrick Masch\OneDrive - FH Technikum Wien\fh\bic4\ie\BIC4ExoticAnimals\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
