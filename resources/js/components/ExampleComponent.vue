@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" >
         <div class="columns is-multiline">
             <div class="card column is-half is-offset-one-quarter">
                 <header class="card-header">

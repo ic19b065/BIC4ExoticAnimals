@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- <h2>Search Animals</h2> -->
-        <table border="1">
+        <table class="table has-background-success is-bordered">
             <tr>
                 <th>ID</th>
                 <th>Name</th>
@@ -17,15 +17,15 @@
                 <td>{{ animal.slug }}</td>
                 <td>{{ animal.description }}</td>
                 <td>{{ animal.species_id }}</td>
-                <td>{{ animal.created_at }}</td>
-                <td>{{ animal.updated_at }}</td>
+                <td>{{ animal.created_at | moment('DD.MM.YYYY')}}</td>
+                <td>{{ animal.updated_at | moment('DD.MM.YYYY')}}</td>
             </tr>
         </table>
         <form @submit.prevent="submit">
             <div>
-                <input id="name" class="input" type="text" placeholder="Name" v-model="form.name" v-bind:class="{ 'is-danger': form.errors.has('name')}">
+                <input id="name" class="input has-background-grey-light" type="text" placeholder="Name" v-model="form.name" v-bind:class="{ 'is-danger': form.errors.has('name')}">
             </div>
-            <button type="submit">search</button>
+            <button type="submit" class="button is-large is-primary is-outlined is-fullwidth has-background-warning">search</button>
         </form>
     </div>
 </template>
@@ -55,7 +55,7 @@
 
         methods: {
             submit() {
-                fetch('http://localhost:8000/list/animal')
+                fetch('/list/animal')
                     .then(res => res.json())
                     .then(res => {
                         console.log(res);

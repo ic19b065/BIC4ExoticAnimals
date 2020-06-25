@@ -1,10 +1,9 @@
 <template>
     <div>
         <!-- <h2>Species</h2> -->
-        <table border="1">
+        <table class="table has-background-success is-bordered">
             <tr>
                 <th>ID</th>
-                <th>Slug</th>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Created at</th>
@@ -12,14 +11,13 @@
             </tr>
             <tr v-for="specie in species">
                 <td>{{ specie.id }}</td>
-                <td>{{ specie.slug }}</td>
                 <td>{{ specie.name }}</td>
                 <td>{{ specie.description }}</td>
-                <td>{{ specie.created_at }}</td>
-                <td>{{ specie.updated_at }}</td>
+                <td>{{ specie.created_at | moment('DD.MM.YYYY')}}</td>
+                <td>{{ specie.updated_at | moment('DD.MM.YYYY')}}</td>
                 <td>
                     <p class="buttons">
-                        <a :href="'/species/' + specie.slug + '/edit'" class="button is-info is-outlined">
+                        <a :href="'/species/' + specie.slug + '/edit'" class="button is-info is-outlined has-background-warning">
                             <span class="icon">
                                 Edit
                               <i class="fa fa-edit"></i>
@@ -29,7 +27,7 @@
                 </td>
                 <td>
                     <p class="buttons">
-                        <a :href="'/species/' + specie.slug" class="button is-info is-outlined">
+                        <a :href="'/species/' + specie.slug" class="button is-info is-outlined has-background-warning">
                             <span class="icon">
                                 Show
                             </span>

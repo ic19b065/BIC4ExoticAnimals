@@ -1,11 +1,13 @@
 <template>
-    <div>
-        <h2><b>ID:</b> {{form.id}}</h2>
-        <h2><b>Slug:</b> {{form.slug}}</h2>
-        <h2><b>Name:</b> {{form.name}}</h2>
-        <h2><b>Description:</b> {{form.description}}</h2>
-        <h2><b>Created at:</b> {{form.created_at}}</h2>
-        <h2><b>Updated at:</b> {{form.updated_at}}</h2>
+    <div class="card">
+        <div>
+            <h2><b>ID:</b> {{form.id}}</h2>
+            <h2><b>Slug:</b> {{form.slug}}</h2>
+            <h2><b>Name:</b> {{form.name}}</h2>
+            <h2><b>Description:</b> {{form.description}}</h2>
+            <h2><b>Created at:</b> {{form.created_at | moment('DD.MM.YYYY')}}</h2>
+            <h2><b>Updated at:</b> {{form.updated_at | moment('DD.MM.YYYY')}}</h2>
+        </div>
     </div>
 </template>
 <script>

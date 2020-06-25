@@ -2,27 +2,23 @@
 
     <div>
         <!-- <h2>Animals</h2> -->
-        <table border="1">
+        <table class="table has-background-success is-bordered">
             <tr>
-                <th>ID</th>
                 <th>Name</th>
-                <th>Slug</th>
                 <th>Description</th>
                 <th>Species-ID</th>
                 <th>Created at</th>
                 <th>Updated at</th>
             </tr>
             <tr v-for="animal in animals">
-                <td>{{ animal.id }}</td>
                 <td>{{ animal.name }}</td>
-                <td>{{ animal.slug }}</td>
                 <td>{{ animal.description }}</td>
                 <td>{{ animal.species_id }}</td>
-                <td>{{ animal.created_at }}</td>
-                <td>{{ animal.updated_at }}</td>
+                <td>{{ animal.created_at | moment('DD.MM.YYYY')}}</td>
+                <td>{{ animal.updated_at | moment('DD.MM.YYYY')}}</td>
                 <td>
                     <p class="buttons">
-                        <a :href="'/animal/' + animal.slug + '/edit'" class="button is-info is-outlined">
+                        <a :href="'/animal/' + animal.slug + '/edit'" class="button is-info is-outlined has-background-warning">
                             <span class="icon">
                                 Edit
                             </span>
@@ -31,7 +27,7 @@
                 </td>
                 <td>
                     <p class="buttons">
-                        <a :href="'/animal/' + animal.slug" class="button is-info is-outlined">
+                        <a :href="'/animal/' + animal.slug" class="button is-info is-outlined has-background-warning">
                             <span class="icon">
                                 Show
                             </span>

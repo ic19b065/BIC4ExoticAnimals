@@ -1948,10 +1948,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2084,10 +2080,11 @@ var form = new Form({
         _this.form.noReset = ['name', 'description', 'species_id'];
         _this.edit = true;
       });
-      alert('Done!');
+      window.location.href = '/animal';
     },
     delete_animal: function delete_animal() {
       this.form["delete"]('/animal/' + this.currentAnimal.slug);
+      window.location.href = '/animal';
     }
   },
   created: function created() {
@@ -2190,10 +2187,11 @@ var form = new Form({
         _this.form.noReset = ['name', 'description'];
         _this.edit = true;
       });
-      alert('Done!');
+      window.location.href = '/species';
     },
     delete_species: function delete_species() {
       this.form["delete"]('/species/' + this.currentSpecies.slug);
+      window.location.href = '/species';
     }
   },
   created: function created() {
@@ -2315,7 +2313,7 @@ var form = new Form({
     submit: function submit() {
       var _this = this;
 
-      fetch('http://localhost:8000/list/animal').then(function (res) {
+      fetch('/list/animal').then(function (res) {
         return res.json();
       }).then(function (res) {
         console.log(res);
@@ -2336,6 +2334,8 @@ var form = new Form({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -2410,6 +2410,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 var form = new Form({
   'id': '',
   'slug': '',
@@ -2461,8 +2463,6 @@ var form = new Form({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -20183,32 +20183,33 @@ var render = function() {
   return _c("div", [
     _c(
       "table",
-      { attrs: { border: "1" } },
+      { staticClass: "table has-background-success is-bordered" },
       [
         _vm._m(0),
         _vm._v(" "),
         _vm._l(_vm.animals, function(animal) {
           return _c("tr", [
-            _c("td", [_vm._v(_vm._s(animal.id))]),
-            _vm._v(" "),
             _c("td", [_vm._v(_vm._s(animal.name))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(animal.slug))]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(animal.description))]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(animal.species_id))]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(animal.created_at))]),
+            _c("td", [
+              _vm._v(_vm._s(_vm._f("moment")(animal.created_at, "DD.MM.YYYY")))
+            ]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(animal.updated_at))]),
+            _c("td", [
+              _vm._v(_vm._s(_vm._f("moment")(animal.updated_at, "DD.MM.YYYY")))
+            ]),
             _vm._v(" "),
             _c("td", [
               _c("p", { staticClass: "buttons" }, [
                 _c(
                   "a",
                   {
-                    staticClass: "button is-info is-outlined",
+                    staticClass:
+                      "button is-info is-outlined has-background-warning",
                     attrs: { href: "/animal/" + animal.slug + "/edit" }
                   },
                   [
@@ -20227,7 +20228,8 @@ var render = function() {
                 _c(
                   "a",
                   {
-                    staticClass: "button is-info is-outlined",
+                    staticClass:
+                      "button is-info is-outlined has-background-warning",
                     attrs: { href: "/animal/" + animal.slug }
                   },
                   [
@@ -20253,11 +20255,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("th", [_vm._v("ID")]),
-      _vm._v(" "),
       _c("th", [_vm._v("Name")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Slug")]),
       _vm._v(" "),
       _c("th", [_vm._v("Description")]),
       _vm._v(" "),
@@ -20293,7 +20291,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("header", { staticClass: "card-header" }, [
+      _c("header", { staticClass: "card-header has-background-success" }, [
         _c("h1", {
           staticClass: "card-header-title is-centered",
           domProps: {
@@ -20337,7 +20335,7 @@ var render = function() {
                         expression: "form.name"
                       }
                     ],
-                    staticClass: "input",
+                    staticClass: "input has-background-grey-light",
                     class: { "is-danger": _vm.form.errors.has("name") },
                     attrs: { id: "name", type: "text", autofocus: "" },
                     domProps: { value: _vm.form.name },
@@ -20380,7 +20378,7 @@ var render = function() {
                     expression: "form.description"
                   }
                 ],
-                staticClass: "textarea",
+                staticClass: "textarea has-background-grey-light",
                 attrs: { id: "description" },
                 domProps: { value: _vm.form.description },
                 on: {
@@ -20421,7 +20419,7 @@ var render = function() {
                     expression: "form.species_id"
                   }
                 ],
-                staticClass: "input",
+                staticClass: "input has-background-grey-light",
                 attrs: { id: "species_id" },
                 domProps: { value: _vm.form.species_id },
                 on: {
@@ -20446,7 +20444,8 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("button", {
-            staticClass: "button is-large is-primary is-outlined is-fullwidth",
+            staticClass:
+              "button is-large is-primary is-outlined is-fullwidth has-background-warning",
             attrs: { type: "submit" },
             domProps: { textContent: _vm._s(_vm.edit ? "Save" : "Create") }
           }),
@@ -20495,7 +20494,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("header", { staticClass: "card-header" }, [
+      _c("header", { staticClass: "card-header has-background-success" }, [
         _c("h1", {
           staticClass: "card-header-title is-centered",
           domProps: {
@@ -20539,7 +20538,7 @@ var render = function() {
                         expression: "form.name"
                       }
                     ],
-                    staticClass: "input",
+                    staticClass: "input has-background-grey-light",
                     class: { "is-danger": _vm.form.errors.has("name") },
                     attrs: { id: "name", type: "text", autofocus: "" },
                     domProps: { value: _vm.form.name },
@@ -20582,7 +20581,7 @@ var render = function() {
                     expression: "form.description"
                   }
                 ],
-                staticClass: "textarea",
+                staticClass: "textarea has-background-grey-light",
                 attrs: { id: "description" },
                 domProps: { value: _vm.form.description },
                 on: {
@@ -20607,7 +20606,8 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("button", {
-            staticClass: "button is-large is-primary is-outlined is-fullwidth",
+            staticClass:
+              "button is-large is-primary is-outlined is-fullwidth has-background-warning",
             attrs: { type: "submit" },
             domProps: { textContent: _vm._s(_vm.edit ? "Save" : "Create") }
           }),
@@ -20698,7 +20698,7 @@ var render = function() {
   return _c("div", [
     _c(
       "table",
-      { attrs: { border: "1" } },
+      { staticClass: "table has-background-success is-bordered" },
       [
         _vm._m(0),
         _vm._v(" "),
@@ -20715,9 +20715,17 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(animal.species_id))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(animal.created_at))]),
+                _c("td", [
+                  _vm._v(
+                    _vm._s(_vm._f("moment")(animal.created_at, "DD.MM.YYYY"))
+                  )
+                ]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(animal.updated_at))])
+                _c("td", [
+                  _vm._v(
+                    _vm._s(_vm._f("moment")(animal.updated_at, "DD.MM.YYYY"))
+                  )
+                ])
               ])
             : _vm._e()
         })
@@ -20746,7 +20754,7 @@ var render = function() {
                 expression: "form.name"
               }
             ],
-            staticClass: "input",
+            staticClass: "input has-background-grey-light",
             class: { "is-danger": _vm.form.errors.has("name") },
             attrs: { id: "name", type: "text", placeholder: "Name" },
             domProps: { value: _vm.form.name },
@@ -20761,7 +20769,15 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _c("button", { attrs: { type: "submit" } }, [_vm._v("search")])
+        _c(
+          "button",
+          {
+            staticClass:
+              "button is-large is-primary is-outlined is-fullwidth has-background-warning",
+            attrs: { type: "submit" }
+          },
+          [_vm._v("search")]
+        )
       ]
     )
   ])
@@ -20809,31 +20825,43 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h2", [_c("b", [_vm._v("ID:")]), _vm._v(" " + _vm._s(_vm.form.id))]),
-    _vm._v(" "),
-    _c("h2", [_c("b", [_vm._v("Name:")]), _vm._v(" " + _vm._s(_vm.form.name))]),
-    _vm._v(" "),
-    _c("h2", [_c("b", [_vm._v("Slug:")]), _vm._v(" " + _vm._s(_vm.form.slug))]),
-    _vm._v(" "),
-    _c("h2", [
-      _c("b", [_vm._v("Description:")]),
-      _vm._v(" " + _vm._s(_vm.form.description))
-    ]),
-    _vm._v(" "),
-    _c("h2", [
-      _c("b", [_vm._v("Species-ID:")]),
-      _vm._v(" " + _vm._s(_vm.form.species_id))
-    ]),
-    _vm._v(" "),
-    _c("h2", [
-      _c("b", [_vm._v("Created at:")]),
-      _vm._v(" " + _vm._s(_vm.form.created_at))
-    ]),
-    _vm._v(" "),
-    _c("h2", [
-      _c("b", [_vm._v("Updated at:")]),
-      _vm._v(" " + _vm._s(_vm.form.updated_at))
+  return _c("div", { staticClass: "card" }, [
+    _c("div", [
+      _c("h2", [_c("b", [_vm._v("ID:")]), _vm._v(" " + _vm._s(_vm.form.id))]),
+      _vm._v(" "),
+      _c("h2", [
+        _c("b", [_vm._v("Name:")]),
+        _vm._v(" " + _vm._s(_vm.form.name))
+      ]),
+      _vm._v(" "),
+      _c("h2", [
+        _c("b", [_vm._v("Slug:")]),
+        _vm._v(" " + _vm._s(_vm.form.slug))
+      ]),
+      _vm._v(" "),
+      _c("h2", [
+        _c("b", [_vm._v("Description:")]),
+        _vm._v(" " + _vm._s(_vm.form.description))
+      ]),
+      _vm._v(" "),
+      _c("h2", [
+        _c("b", [_vm._v("Species-ID:")]),
+        _vm._v(" " + _vm._s(_vm.form.species_id))
+      ]),
+      _vm._v(" "),
+      _c("h2", [
+        _c("b", [_vm._v("Created at:")]),
+        _vm._v(
+          " " + _vm._s(_vm._f("moment")(_vm.form.created_at, "DD.MM.YYYY"))
+        )
+      ]),
+      _vm._v(" "),
+      _c("h2", [
+        _c("b", [_vm._v("Updated at:")]),
+        _vm._v(
+          " " + _vm._s(_vm._f("moment")(_vm.form.updated_at, "DD.MM.YYYY"))
+        )
+      ])
     ])
   ])
 }
@@ -20859,26 +20887,38 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h2", [_c("b", [_vm._v("ID:")]), _vm._v(" " + _vm._s(_vm.form.id))]),
-    _vm._v(" "),
-    _c("h2", [_c("b", [_vm._v("Slug:")]), _vm._v(" " + _vm._s(_vm.form.slug))]),
-    _vm._v(" "),
-    _c("h2", [_c("b", [_vm._v("Name:")]), _vm._v(" " + _vm._s(_vm.form.name))]),
-    _vm._v(" "),
-    _c("h2", [
-      _c("b", [_vm._v("Description:")]),
-      _vm._v(" " + _vm._s(_vm.form.description))
-    ]),
-    _vm._v(" "),
-    _c("h2", [
-      _c("b", [_vm._v("Created at:")]),
-      _vm._v(" " + _vm._s(_vm.form.created_at))
-    ]),
-    _vm._v(" "),
-    _c("h2", [
-      _c("b", [_vm._v("Updated at:")]),
-      _vm._v(" " + _vm._s(_vm.form.updated_at))
+  return _c("div", { staticClass: "card" }, [
+    _c("div", [
+      _c("h2", [_c("b", [_vm._v("ID:")]), _vm._v(" " + _vm._s(_vm.form.id))]),
+      _vm._v(" "),
+      _c("h2", [
+        _c("b", [_vm._v("Slug:")]),
+        _vm._v(" " + _vm._s(_vm.form.slug))
+      ]),
+      _vm._v(" "),
+      _c("h2", [
+        _c("b", [_vm._v("Name:")]),
+        _vm._v(" " + _vm._s(_vm.form.name))
+      ]),
+      _vm._v(" "),
+      _c("h2", [
+        _c("b", [_vm._v("Description:")]),
+        _vm._v(" " + _vm._s(_vm.form.description))
+      ]),
+      _vm._v(" "),
+      _c("h2", [
+        _c("b", [_vm._v("Created at:")]),
+        _vm._v(
+          " " + _vm._s(_vm._f("moment")(_vm.form.created_at, "DD.MM.YYYY"))
+        )
+      ]),
+      _vm._v(" "),
+      _c("h2", [
+        _c("b", [_vm._v("Updated at:")]),
+        _vm._v(
+          " " + _vm._s(_vm._f("moment")(_vm.form.updated_at, "DD.MM.YYYY"))
+        )
+      ])
     ])
   ])
 }
@@ -20907,7 +20947,7 @@ var render = function() {
   return _c("div", [
     _c(
       "table",
-      { attrs: { border: "1" } },
+      { staticClass: "table has-background-success is-bordered" },
       [
         _vm._m(0),
         _vm._v(" "),
@@ -20915,22 +20955,25 @@ var render = function() {
           return _c("tr", [
             _c("td", [_vm._v(_vm._s(specie.id))]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(specie.slug))]),
-            _vm._v(" "),
             _c("td", [_vm._v(_vm._s(specie.name))]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(specie.description))]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(specie.created_at))]),
+            _c("td", [
+              _vm._v(_vm._s(_vm._f("moment")(specie.created_at, "DD.MM.YYYY")))
+            ]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(specie.updated_at))]),
+            _c("td", [
+              _vm._v(_vm._s(_vm._f("moment")(specie.updated_at, "DD.MM.YYYY")))
+            ]),
             _vm._v(" "),
             _c("td", [
               _c("p", { staticClass: "buttons" }, [
                 _c(
                   "a",
                   {
-                    staticClass: "button is-info is-outlined",
+                    staticClass:
+                      "button is-info is-outlined has-background-warning",
                     attrs: { href: "/species/" + specie.slug + "/edit" }
                   },
                   [_vm._m(1, true)]
@@ -20943,7 +20986,8 @@ var render = function() {
                 _c(
                   "a",
                   {
-                    staticClass: "button is-info is-outlined",
+                    staticClass:
+                      "button is-info is-outlined has-background-warning",
                     attrs: { href: "/species/" + specie.slug }
                   },
                   [
@@ -20970,8 +21014,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("tr", [
       _c("th", [_vm._v("ID")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Slug")]),
       _vm._v(" "),
       _c("th", [_vm._v("Name")]),
       _vm._v(" "),

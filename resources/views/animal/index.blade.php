@@ -2,7 +2,7 @@
 
 
 @section('content')
-    <section class="section">
+    <section class="section has-background-success">
         <div id="app">
             <div class="container">
                 <h1>List animal</h1>

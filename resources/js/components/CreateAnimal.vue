@@ -1,6 +1,6 @@
 <template>
     <div>
-        <header class="card-header">
+        <header class="card-header has-background-success">
             <h1 class="card-header-title is-centered" v-text="edit ? form.title : 'New Animal'" />
         </header>
         <!-- <h2>Create Animal</h2> -->
@@ -12,7 +12,7 @@
                 <div class="control">
                     <input id="name"
                            v-model="form.name"
-                           class="input"
+                           class="input has-background-grey-light"
                            v-bind:class="{ 'is-danger': form.errors.has('name')}"
                            type="text" autofocus>
                 </div>
@@ -22,19 +22,19 @@
             <div class="field">
                 <label class="label" for="description">Description</label>
                 <div class="control">
-                    <textarea id="description" v-model="form.description" class="textarea"></textarea>
+                    <textarea id="description" v-model="form.description" class="textarea has-background-grey-light"></textarea>
                 </div>
                 <p class="help is-danger" v-if="form.errors.has('description')" v-text="form.errors.get('description')" />
             </div>
             <div class="field">
                 <label class="label" for="species_id">Species ID</label>
                 <div class="control">
-                    <textarea id="species_id" v-model="form.species_id" class="input"></textarea>
+                    <textarea id="species_id" v-model="form.species_id" class="input has-background-grey-light"></textarea>
                 </div>
                 <p class="help is-danger" v-if="form.errors.has('species_id')" v-text="form.errors.get('species_id')" />
             </div>
 
-            <button type="submit" class="button is-large is-primary is-outlined is-fullwidth" v-text="edit ? 'Save' : 'Create'" />
+            <button type="submit" class="button is-large is-primary is-outlined is-fullwidth has-background-warning" v-text="edit ? 'Save' : 'Create'" />
             <div v-if="edit">
                 <button @click="delete_animal" class="button is-danger is-large is-primary is-outlined is-fullwidth">Delete</button>
             </div>
@@ -91,11 +91,12 @@
 
                             this.edit = true;
                         });
-                alert('Done!');
+                window.location.href = '/animal';
 
             },
             delete_animal () {
                 this.form.delete('/animal/' + this.currentAnimal.slug);
+                window.location.href = '/animal';
             }
         },
         created() {
