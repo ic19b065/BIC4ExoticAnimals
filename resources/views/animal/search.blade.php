@@ -4,7 +4,7 @@
 @section('content')
     <section class="section has-background-success">
         <div class="container">
-            <h1>Search animal</h1>
+            <!--<h1>Search animal</h1>-->
             <searchanimal>
 
             </searchanimal>

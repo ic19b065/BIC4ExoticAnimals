@@ -8,6 +8,15 @@
             <h2><b>Created at:</b> {{form.created_at | moment('DD.MM.YYYY')}}</h2>
             <h2><b>Updated at:</b> {{form.updated_at | moment('DD.MM.YYYY')}}</h2>
         </div>
+        <div>
+            <p class="buttons">
+                <a :href="'/species/' + form.slug + '/edit'" class="button is-outlined is-primary is-fullwidth has-background-warning">
+                    <span class="icon">
+                        Edit
+                    </span>
+                </a>
+            </p>
+        </div>
     </div>
 </template>
 <script>
@@ -49,7 +58,6 @@
             this.form.updated_at = this.currentSpecies.updated_at;
 
             this.form.noReset = ['id', 'slug', 'name', 'description', 'created_at', 'updated_at'];
-
         }
     }
 

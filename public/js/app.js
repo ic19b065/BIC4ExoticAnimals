@@ -2287,6 +2287,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 var form = new Form({
   'name': ''
 });
@@ -2334,6 +2336,15 @@ var form = new Form({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2400,6 +2411,15 @@ var form = new Form({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -20769,15 +20789,7 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass:
-              "button is-large is-primary is-outlined is-fullwidth has-background-warning",
-            attrs: { type: "submit" }
-          },
-          [_vm._v("search")]
-        )
+        _vm._m(1)
       ]
     )
   ])
@@ -20801,6 +20813,22 @@ var staticRenderFns = [
       _c("th", [_vm._v("Created at")]),
       _vm._v(" "),
       _c("th", [_vm._v("Updated at")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c(
+        "button",
+        {
+          staticClass:
+            "button is-large is-primary is-outlined is-fullwidth has-background-warning",
+          attrs: { type: "submit" }
+        },
+        [_vm._v("search")]
+      )
     ])
   }
 ]
@@ -20862,6 +20890,26 @@ var render = function() {
           " " + _vm._s(_vm._f("moment")(_vm.form.updated_at, "DD.MM.YYYY"))
         )
       ])
+    ]),
+    _vm._v(" "),
+    _c("div", [
+      _c("p", { staticClass: "buttons" }, [
+        _c(
+          "a",
+          {
+            staticClass:
+              "button is-outlined is-primary is-fullwidth has-background-warning",
+            attrs: { href: "/animal/" + _vm.form.slug + "/edit" }
+          },
+          [
+            _c("span", { staticClass: "icon" }, [
+              _vm._v(
+                "\n                            Edit\n                        "
+              )
+            ])
+          ]
+        )
+      ])
     ])
   ])
 }
@@ -20917,6 +20965,24 @@ var render = function() {
         _c("b", [_vm._v("Updated at:")]),
         _vm._v(
           " " + _vm._s(_vm._f("moment")(_vm.form.updated_at, "DD.MM.YYYY"))
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", [
+      _c("p", { staticClass: "buttons" }, [
+        _c(
+          "a",
+          {
+            staticClass:
+              "button is-outlined is-primary is-fullwidth has-background-warning",
+            attrs: { href: "/species/" + _vm.form.slug + "/edit" }
+          },
+          [
+            _c("span", { staticClass: "icon" }, [
+              _vm._v("\n                    Edit\n                ")
+            ])
+          ]
         )
       ])
     ])

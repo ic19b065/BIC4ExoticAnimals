@@ -9,6 +9,15 @@
             <h2><b>Created at:</b> {{form.created_at | moment('DD.MM.YYYY')}}</h2>
             <h2><b>Updated at:</b> {{form.updated_at | moment('DD.MM.YYYY')}}</h2>
         </div>
+        <div>
+            <p class="buttons">
+                <a :href="'/animal/' + form.slug + '/edit'" class="button is-outlined is-primary is-fullwidth has-background-warning">
+                            <span class="icon">
+                                Edit
+                            </span>
+                </a>
+            </p>
+        </div>
     </div>
 </template>
 <script>

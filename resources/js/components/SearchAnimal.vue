@@ -25,7 +25,9 @@
             <div>
                 <input id="name" class="input has-background-grey-light" type="text" placeholder="Name" v-model="form.name" v-bind:class="{ 'is-danger': form.errors.has('name')}">
             </div>
-            <button type="submit" class="button is-large is-primary is-outlined is-fullwidth has-background-warning">search</button>
+            <div>
+                <button type="submit" class="button is-large is-primary is-outlined is-fullwidth has-background-warning">search</button>
+            </div>
         </form>
     </div>
 </template>
