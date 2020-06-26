@@ -2164,7 +2164,7 @@ var form = new Form({
     fetchSpecies: function fetchSpecies() {
       var _this2 = this;
 
-      fetch('../list/species').then(function (res) {
+      fetch('../../list/species').then(function (res) {
         return res.json();
       }).then(function (res) {
         console.log(res);
@@ -2183,8 +2183,8 @@ var form = new Form({
       this.form.species_id = this.currentAnimal.species_id;
       this.form.noReset = ['name', 'description', 'species_id'];
     } else {
-      this.fetchSpecies();
       this.url = '/animal';
+      this.fetchSpecies();
     }
   }
 });
@@ -20584,47 +20584,43 @@ var render = function() {
           }
         },
         [
-          !_vm.edit
-            ? _c("div", { staticClass: "field" }, [
-                _c("label", { staticClass: "label", attrs: { for: "name" } }, [
-                  _vm._v("Name")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "control" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.form.name,
-                        expression: "form.name"
-                      }
-                    ],
-                    staticClass: "input has-background-grey-light",
-                    class: { "is-danger": _vm.form.errors.has("name") },
-                    attrs: { id: "name", type: "text", autofocus: "" },
-                    domProps: { value: _vm.form.name },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.form, "name", $event.target.value)
-                      }
+          _c("div", { staticClass: "field" }, [
+            _c("label", { staticClass: "label", attrs: { for: "name" } }, [
+              _vm._v("Name")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "control" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.name,
+                    expression: "form.name"
+                  }
+                ],
+                staticClass: "input has-background-grey-light",
+                class: { "is-danger": _vm.form.errors.has("name") },
+                attrs: { id: "name", type: "text", autofocus: "" },
+                domProps: { value: _vm.form.name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
                     }
-                  })
-                ]),
-                _vm._v(" "),
-                _vm.form.errors.has("name")
-                  ? _c("p", {
-                      staticClass: "help is-danger",
-                      domProps: {
-                        textContent: _vm._s(_vm.form.errors.get("name"))
-                      }
-                    })
-                  : _vm._e()
-              ])
-            : _vm._e(),
+                    _vm.$set(_vm.form, "name", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _vm.form.errors.has("name")
+              ? _c("p", {
+                  staticClass: "help is-danger",
+                  domProps: { textContent: _vm._s(_vm.form.errors.get("name")) }
+                })
+              : _vm._e()
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "field" }, [
             _c(
@@ -20671,7 +20667,7 @@ var render = function() {
             _c(
               "label",
               { staticClass: "label", attrs: { for: "species_id" } },
-              [_vm._v("Chooce Species from Dropdown:")]
+              [_vm._v("Choose Species from Dropdown:")]
             ),
             _vm._v(" "),
             _c("div", { staticClass: "control" }, [

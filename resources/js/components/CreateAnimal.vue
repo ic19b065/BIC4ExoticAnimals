@@ -7,7 +7,7 @@
         <query-message :success="form.isSuccess()" :fail="form.isFail()"
                        :message="form.failMessage || form.successMessage"></query-message>
         <form @submit.prevent="submit">
-            <div class="field" v-if="!edit">
+            <div class="field">
                 <label class="label" for="name">Name</label>
                 <div class="control">
                     <input id="name"
@@ -27,7 +27,7 @@
                 <p class="help is-danger" v-if="form.errors.has('description')" v-text="form.errors.get('description')" />
             </div>
             <div class="field">
-                <label class="label" for="species_id">Chooce Species from Dropdown:</label>
+                <label class="label" for="species_id">Choose Species from Dropdown:</label>
                 <div class="control">
                     <select id="species_id" v-model="form.species_id" class="input has-background-grey-light">
                         <option v-for="specie in species" :value="specie.id">{{specie.name}}</option>
@@ -111,7 +111,7 @@
                 window.location.href = '/animal';
             },
             fetchSpecies() {
-                fetch('../list/species')
+                fetch('../../list/species')
                     .then(res => res.json())
                     .then(res => {
                         console.log(res);
@@ -133,8 +133,8 @@
                 this.form.noReset = ['name', 'description', 'species_id'];
             }
             else {
-                this.fetchSpecies();
                 this.url = '/animal';
+                this.fetchSpecies();
             }
         }
 
