@@ -1,11 +1,9 @@
 <template>
     <div class="card">
         <div>
-            <h2><b>ID:</b> {{form.id}}</h2>
             <h2><b>Name:</b> {{form.name}}</h2>
-            <h2><b>Slug:</b> {{form.slug}}</h2>
             <h2><b>Description:</b> {{form.description}}</h2>
-            <h2><b>Species-ID:</b> {{form.species_id}}</h2>
+            <h2 v-for="specie of species" v-if="specie.id == form.species_id"><b>Species:</b> {{specie.name}}</h2>
             <h2><b>Created at:</b> {{form.created_at | moment('DD.MM.YYYY')}}</h2>
             <h2><b>Updated at:</b> {{form.updated_at | moment('DD.MM.YYYY')}}</h2>
         </div>
@@ -47,10 +45,22 @@
         data() {
             return {
                 form: form,
-                url: ''
+                url: '',
+                species: [],
+                specie: {
+                    id: '',
+                    slug: '',
+                    name: '',
+                    description: '',
+                    created_at: '',
+                    updated_at: ''
+                },
+                species_id: ''
             }
         },
         created() {
+            this.fetchSpecies();
+
             this.url = '/animal/' + this.currentAnimal.slug;
             this.form.id = this.currentAnimal.id;
             this.form.name = this.currentAnimal.name;
@@ -61,7 +71,17 @@
             this.form.updated_at = this.currentAnimal.updated_at;
 
             this.form.noReset = ['id', 'name', 'slug', 'description', 'species_id', 'created_at', 'updated_at'];
+        },
+        methods: {
+            fetchSpecies() {
+                fetch('../list/species')
+                    .then(res => res.json())
+                    .then(res => {
+                        console.log(res);
+                        this.species=res;
+                    })
 
+            }
         }
     }
 

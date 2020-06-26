@@ -1948,7 +1948,49 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    QueryMessage: QueryMessage
+  },
+  props: {
+    isShow: {
+      required: false,
+      type: Boolean,
+      "default": false
+    },
+    currentSpecies: {
+      required: false,
+      type: Object
+    }
+  },
   data: function data() {
     return {
       animals: [],
@@ -1962,17 +2004,28 @@ __webpack_require__.r(__webpack_exports__);
         created_at: '',
         updated_at: ''
       },
-      animal_id: ''
+      animal_id: '',
+      species: [],
+      specie: {
+        id: '',
+        slug: '',
+        name: '',
+        description: '',
+        created_at: '',
+        updated_at: ''
+      },
+      species_id: ''
     };
   },
   created: function created() {
     this.fetchAnimals();
+    this.fetchSpecies();
   },
   methods: {
     fetchAnimals: function fetchAnimals() {
       var _this = this;
 
-      fetch('list/animal').then(function (res) {
+      fetch('../list/animal').then(function (res) {
         return res.json();
       }).then(function (res) {
         console.log(res);
@@ -1982,6 +2035,16 @@ __webpack_require__.r(__webpack_exports__);
     submit: function submit() {
       this.animal["delete"]("/animal/$(animal.slug");
       alert('Animal deleted');
+    },
+    fetchSpecies: function fetchSpecies() {
+      var _this2 = this;
+
+      fetch('../list/species').then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        console.log(res);
+        _this2.species = res;
+      });
     }
   }
 });
@@ -1997,6 +2060,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -2065,7 +2130,17 @@ var form = new Form({
   data: function data() {
     return {
       form: form,
-      url: ''
+      url: '',
+      species: [],
+      specie: {
+        id: '',
+        slug: '',
+        name: '',
+        description: '',
+        created_at: '',
+        updated_at: ''
+      },
+      species_id: ''
     };
   },
   methods: {
@@ -2085,18 +2160,30 @@ var form = new Form({
     delete_animal: function delete_animal() {
       this.form["delete"]('/animal/' + this.currentAnimal.slug);
       window.location.href = '/animal';
+    },
+    fetchSpecies: function fetchSpecies() {
+      var _this2 = this;
+
+      fetch('../list/species').then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        console.log(res);
+        _this2.species = res;
+      });
     }
   },
   created: function created() {
     this.edit = this.isEditable;
 
     if (this.edit) {
+      this.fetchSpecies();
       this.url = '/animal/' + this.currentAnimal.slug;
       this.form.name = this.currentAnimal.name;
       this.form.description = this.currentAnimal.description;
       this.form.species_id = this.currentAnimal.species_id;
       this.form.noReset = ['name', 'description', 'species_id'];
     } else {
+      this.fetchSpecies();
       this.url = '/animal';
     }
   }
@@ -2289,6 +2376,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var form = new Form({
   'name': ''
 });
@@ -2308,8 +2411,28 @@ var form = new Form({
       },
       animal_id: '',
       form: form,
-      url: ''
+      url: '',
+      species: [],
+      specie: {
+        id: '',
+        slug: '',
+        name: '',
+        description: '',
+        created_at: '',
+        updated_at: ''
+      },
+      species_id: ''
     };
+  },
+  props: {
+    showTable: {
+      required: false,
+      type: Boolean,
+      "default": false
+    }
+  },
+  created: function created() {
+    this.fetchSpecies();
   },
   methods: {
     submit: function submit() {
@@ -2320,6 +2443,17 @@ var form = new Form({
       }).then(function (res) {
         console.log(res);
         _this.animals = res;
+        _this.showTable = true;
+      });
+    },
+    fetchSpecies: function fetchSpecies() {
+      var _this2 = this;
+
+      fetch('../list/species').then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        console.log(res);
+        _this2.species = res;
       });
     }
   }
@@ -2336,8 +2470,6 @@ var form = new Form({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -2384,10 +2516,21 @@ var form = new Form({
   data: function data() {
     return {
       form: form,
-      url: ''
+      url: '',
+      species: [],
+      specie: {
+        id: '',
+        slug: '',
+        name: '',
+        description: '',
+        created_at: '',
+        updated_at: ''
+      },
+      species_id: ''
     };
   },
   created: function created() {
+    this.fetchSpecies();
     this.url = '/animal/' + this.currentAnimal.slug;
     this.form.id = this.currentAnimal.id;
     this.form.name = this.currentAnimal.name;
@@ -2397,6 +2540,18 @@ var form = new Form({
     this.form.created_at = this.currentAnimal.created_at;
     this.form.updated_at = this.currentAnimal.updated_at;
     this.form.noReset = ['id', 'name', 'slug', 'description', 'species_id', 'created_at', 'updated_at'];
+  },
+  methods: {
+    fetchSpecies: function fetchSpecies() {
+      var _this = this;
+
+      fetch('../list/species').then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        console.log(res);
+        _this.species = res;
+      });
+    }
   }
 });
 
@@ -2411,8 +2566,6 @@ var form = new Form({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -2483,8 +2636,6 @@ var form = new Form({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -20201,6 +20352,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _vm.isShow
+      ? _c("h2", [_c("br"), _vm._v("Animals from this species:"), _c("br")])
+      : _vm._e(),
+    _vm._v(" "),
     _c(
       "table",
       { staticClass: "table has-background-success is-bordered" },
@@ -20208,61 +20363,151 @@ var render = function() {
         _vm._m(0),
         _vm._v(" "),
         _vm._l(_vm.animals, function(animal) {
-          return _c("tr", [
-            _c("td", [_vm._v(_vm._s(animal.name))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(animal.description))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(animal.species_id))]),
-            _vm._v(" "),
-            _c("td", [
-              _vm._v(_vm._s(_vm._f("moment")(animal.created_at, "DD.MM.YYYY")))
-            ]),
-            _vm._v(" "),
-            _c("td", [
-              _vm._v(_vm._s(_vm._f("moment")(animal.updated_at, "DD.MM.YYYY")))
-            ]),
-            _vm._v(" "),
-            _c("td", [
-              _c("p", { staticClass: "buttons" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass:
-                      "button is-info is-outlined has-background-warning",
-                    attrs: { href: "/animal/" + animal.slug + "/edit" }
-                  },
-                  [
-                    _c("span", { staticClass: "icon" }, [
-                      _vm._v(
-                        "\n                            Edit\n                        "
+          return !_vm.isShow
+            ? _c(
+                "tr",
+                [
+                  _c("td", [_vm._v(_vm._s(animal.name))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(animal.description))]),
+                  _vm._v(" "),
+                  _vm._l(_vm.species, function(specie) {
+                    return specie.id == animal.species_id
+                      ? _c("td", [
+                          _vm._v("\n                " + _vm._s(specie.name))
+                        ])
+                      : _vm._e()
+                  }),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(
+                      _vm._s(_vm._f("moment")(animal.created_at, "DD.MM.YYYY"))
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(
+                      _vm._s(_vm._f("moment")(animal.updated_at, "DD.MM.YYYY"))
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("p", { staticClass: "buttons" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass:
+                            "button is-info is-outlined has-background-warning",
+                          attrs: { href: "/animal/" + animal.slug + "/edit" }
+                        },
+                        [
+                          _c("span", { staticClass: "icon" }, [
+                            _vm._v(
+                              "\n                            Edit\n                        "
+                            )
+                          ])
+                        ]
                       )
                     ])
-                  ]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("td", [
-              _c("p", { staticClass: "buttons" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass:
-                      "button is-info is-outlined has-background-warning",
-                    attrs: { href: "/animal/" + animal.slug }
-                  },
-                  [
-                    _c("span", { staticClass: "icon" }, [
-                      _vm._v(
-                        "\n                            Show\n                        "
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("p", { staticClass: "buttons" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass:
+                            "button is-info is-outlined has-background-warning",
+                          attrs: { href: "/animal/" + animal.slug }
+                        },
+                        [
+                          _c("span", { staticClass: "icon" }, [
+                            _vm._v(
+                              "\n                            Show\n                        "
+                            )
+                          ])
+                        ]
                       )
                     ])
-                  ]
-                )
-              ])
-            ])
-          ])
+                  ])
+                ],
+                2
+              )
+            : _vm._e()
+        }),
+        _vm._v(" "),
+        _vm._l(_vm.animals, function(animal) {
+          return _vm.isShow && animal.species_id == _vm.currentSpecies.id
+            ? _c(
+                "tr",
+                [
+                  _c("td", [_vm._v(_vm._s(animal.name))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(animal.description))]),
+                  _vm._v(" "),
+                  _vm._l(_vm.species, function(specie) {
+                    return specie.id == animal.species_id
+                      ? _c("td", [
+                          _vm._v("\n                " + _vm._s(specie.name))
+                        ])
+                      : _vm._e()
+                  }),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(
+                      _vm._s(_vm._f("moment")(animal.created_at, "DD.MM.YYYY"))
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(
+                      _vm._s(_vm._f("moment")(animal.updated_at, "DD.MM.YYYY"))
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("p", { staticClass: "buttons" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass:
+                            "button is-info is-outlined has-background-warning",
+                          attrs: { href: "/animal/" + animal.slug + "/edit" }
+                        },
+                        [
+                          _c("span", { staticClass: "icon" }, [
+                            _vm._v(
+                              "\n                            Edit\n                        "
+                            )
+                          ])
+                        ]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("p", { staticClass: "buttons" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass:
+                            "button is-info is-outlined has-background-warning",
+                          attrs: { href: "/animal/" + animal.slug }
+                        },
+                        [
+                          _c("span", { staticClass: "icon" }, [
+                            _vm._v(
+                              "\n                            Show\n                        "
+                            )
+                          ])
+                        ]
+                      )
+                    ])
+                  ])
+                ],
+                2
+              )
+            : _vm._e()
         })
       ],
       2
@@ -20279,7 +20524,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Description")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Species-ID")]),
+      _c("th", [_vm._v("Species")]),
       _vm._v(" "),
       _c("th", [_vm._v("Created at")]),
       _vm._v(" "),
@@ -20426,31 +20671,50 @@ var render = function() {
             _c(
               "label",
               { staticClass: "label", attrs: { for: "species_id" } },
-              [_vm._v("Species ID")]
+              [_vm._v("Chooce Species from Dropdown:")]
             ),
             _vm._v(" "),
             _c("div", { staticClass: "control" }, [
-              _c("textarea", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.form.species_id,
-                    expression: "form.species_id"
-                  }
-                ],
-                staticClass: "input has-background-grey-light",
-                attrs: { id: "species_id" },
-                domProps: { value: _vm.form.species_id },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.species_id,
+                      expression: "form.species_id"
                     }
-                    _vm.$set(_vm.form, "species_id", $event.target.value)
+                  ],
+                  staticClass: "input has-background-grey-light",
+                  attrs: { id: "species_id" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.form,
+                        "species_id",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
                   }
-                }
-              })
+                },
+                _vm._l(_vm.species, function(specie) {
+                  return _c("option", { domProps: { value: specie.id } }, [
+                    _vm._v(_vm._s(specie.name))
+                  ])
+                }),
+                0
+              )
             ]),
             _vm._v(" "),
             _vm.form.errors.has("species_id")
@@ -20716,42 +20980,98 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "table",
-      { staticClass: "table has-background-success is-bordered" },
-      [
-        _vm._m(0),
-        _vm._v(" "),
-        _vm._l(_vm.animals, function(animal) {
-          return animal.name == _vm.form.name
-            ? _c("tr", [
-                _c("td", [_vm._v(_vm._s(animal.id))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(animal.name))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(animal.slug))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(animal.description))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(animal.species_id))]),
-                _vm._v(" "),
-                _c("td", [
-                  _vm._v(
-                    _vm._s(_vm._f("moment")(animal.created_at, "DD.MM.YYYY"))
+    _vm.showTable
+      ? _c(
+          "table",
+          { staticClass: "table has-background-success is-bordered" },
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _vm._l(_vm.animals, function(animal) {
+              return animal.name == _vm.form.name
+                ? _c(
+                    "tr",
+                    [
+                      _c("td", [_vm._v(_vm._s(animal.name))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(animal.description))]),
+                      _vm._v(" "),
+                      _vm._l(_vm.species, function(specie) {
+                        return specie.id == animal.species_id
+                          ? _c("td", [
+                              _vm._v("\n                " + _vm._s(specie.name))
+                            ])
+                          : _vm._e()
+                      }),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(
+                          _vm._s(
+                            _vm._f("moment")(animal.created_at, "DD.MM.YYYY")
+                          )
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(
+                          _vm._s(
+                            _vm._f("moment")(animal.updated_at, "DD.MM.YYYY")
+                          )
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c("p", { staticClass: "buttons" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass:
+                                "button is-info is-outlined has-background-warning",
+                              attrs: {
+                                href: "/animal/" + animal.slug + "/edit"
+                              }
+                            },
+                            [
+                              _c("span", { staticClass: "icon" }, [
+                                _vm._v(
+                                  "\n                            Edit\n                        "
+                                )
+                              ])
+                            ]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c("p", { staticClass: "buttons" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass:
+                                "button is-info is-outlined has-background-warning",
+                              attrs: { href: "/animal/" + animal.slug }
+                            },
+                            [
+                              _c("span", { staticClass: "icon" }, [
+                                _vm._v(
+                                  "\n                            Show\n                        "
+                                )
+                              ])
+                            ]
+                          )
+                        ])
+                      ])
+                    ],
+                    2
                   )
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _vm._v(
-                    _vm._s(_vm._f("moment")(animal.updated_at, "DD.MM.YYYY"))
-                  )
-                ])
-              ])
-            : _vm._e()
-        })
-      ],
-      2
-    ),
+                : _vm._e()
+            })
+          ],
+          2
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _c("h1", [_vm._v("Name of the animal to search for:")]),
     _vm._v(" "),
     _c(
       "form",
@@ -20776,7 +21096,11 @@ var render = function() {
             ],
             staticClass: "input has-background-grey-light",
             class: { "is-danger": _vm.form.errors.has("name") },
-            attrs: { id: "name", type: "text", placeholder: "Name" },
+            attrs: {
+              id: "name",
+              type: "text",
+              placeholder: "Name of the Animal"
+            },
             domProps: { value: _vm.form.name },
             on: {
               input: function($event) {
@@ -20800,15 +21124,11 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("th", [_vm._v("ID")]),
-      _vm._v(" "),
       _c("th", [_vm._v("Name")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Slug")]),
       _vm._v(" "),
       _c("th", [_vm._v("Description")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Species-ID")]),
+      _c("th", [_vm._v("Species")]),
       _vm._v(" "),
       _c("th", [_vm._v("Created at")]),
       _vm._v(" "),
@@ -20854,43 +21174,44 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card" }, [
-    _c("div", [
-      _c("h2", [_c("b", [_vm._v("ID:")]), _vm._v(" " + _vm._s(_vm.form.id))]),
-      _vm._v(" "),
-      _c("h2", [
-        _c("b", [_vm._v("Name:")]),
-        _vm._v(" " + _vm._s(_vm.form.name))
-      ]),
-      _vm._v(" "),
-      _c("h2", [
-        _c("b", [_vm._v("Slug:")]),
-        _vm._v(" " + _vm._s(_vm.form.slug))
-      ]),
-      _vm._v(" "),
-      _c("h2", [
-        _c("b", [_vm._v("Description:")]),
-        _vm._v(" " + _vm._s(_vm.form.description))
-      ]),
-      _vm._v(" "),
-      _c("h2", [
-        _c("b", [_vm._v("Species-ID:")]),
-        _vm._v(" " + _vm._s(_vm.form.species_id))
-      ]),
-      _vm._v(" "),
-      _c("h2", [
-        _c("b", [_vm._v("Created at:")]),
-        _vm._v(
-          " " + _vm._s(_vm._f("moment")(_vm.form.created_at, "DD.MM.YYYY"))
-        )
-      ]),
-      _vm._v(" "),
-      _c("h2", [
-        _c("b", [_vm._v("Updated at:")]),
-        _vm._v(
-          " " + _vm._s(_vm._f("moment")(_vm.form.updated_at, "DD.MM.YYYY"))
-        )
-      ])
-    ]),
+    _c(
+      "div",
+      [
+        _c("h2", [
+          _c("b", [_vm._v("Name:")]),
+          _vm._v(" " + _vm._s(_vm.form.name))
+        ]),
+        _vm._v(" "),
+        _c("h2", [
+          _c("b", [_vm._v("Description:")]),
+          _vm._v(" " + _vm._s(_vm.form.description))
+        ]),
+        _vm._v(" "),
+        _vm._l(_vm.species, function(specie) {
+          return specie.id == _vm.form.species_id
+            ? _c("h2", [
+                _c("b", [_vm._v("Species:")]),
+                _vm._v(" " + _vm._s(specie.name))
+              ])
+            : _vm._e()
+        }),
+        _vm._v(" "),
+        _c("h2", [
+          _c("b", [_vm._v("Created at:")]),
+          _vm._v(
+            " " + _vm._s(_vm._f("moment")(_vm.form.created_at, "DD.MM.YYYY"))
+          )
+        ]),
+        _vm._v(" "),
+        _c("h2", [
+          _c("b", [_vm._v("Updated at:")]),
+          _vm._v(
+            " " + _vm._s(_vm._f("moment")(_vm.form.updated_at, "DD.MM.YYYY"))
+          )
+        ])
+      ],
+      2
+    ),
     _vm._v(" "),
     _c("div", [
       _c("p", { staticClass: "buttons" }, [
@@ -20937,13 +21258,6 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card" }, [
     _c("div", [
-      _c("h2", [_c("b", [_vm._v("ID:")]), _vm._v(" " + _vm._s(_vm.form.id))]),
-      _vm._v(" "),
-      _c("h2", [
-        _c("b", [_vm._v("Slug:")]),
-        _vm._v(" " + _vm._s(_vm.form.slug))
-      ]),
-      _vm._v(" "),
       _c("h2", [
         _c("b", [_vm._v("Name:")]),
         _vm._v(" " + _vm._s(_vm.form.name))
@@ -21019,8 +21333,6 @@ var render = function() {
         _vm._v(" "),
         _vm._l(_vm.species, function(specie) {
           return _c("tr", [
-            _c("td", [_vm._v(_vm._s(specie.id))]),
-            _vm._v(" "),
             _c("td", [_vm._v(_vm._s(specie.name))]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(specie.description))]),
@@ -21079,8 +21391,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("th", [_vm._v("ID")]),
-      _vm._v(" "),
       _c("th", [_vm._v("Name")]),
       _vm._v(" "),
       _c("th", [_vm._v("Description")]),

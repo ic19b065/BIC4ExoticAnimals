@@ -27,9 +27,11 @@
                 <p class="help is-danger" v-if="form.errors.has('description')" v-text="form.errors.get('description')" />
             </div>
             <div class="field">
-                <label class="label" for="species_id">Species ID</label>
+                <label class="label" for="species_id">Chooce Species from Dropdown:</label>
                 <div class="control">
-                    <textarea id="species_id" v-model="form.species_id" class="input has-background-grey-light"></textarea>
+                    <select id="species_id" v-model="form.species_id" class="input has-background-grey-light">
+                        <option v-for="specie in species" :value="specie.id">{{specie.name}}</option>
+                    </select>
                 </div>
                 <p class="help is-danger" v-if="form.errors.has('species_id')" v-text="form.errors.get('species_id')" />
             </div>
@@ -68,7 +70,17 @@
         data() {
             return {
                 form: form,
-                url: ''
+                url: '',
+                species: [],
+                specie: {
+                    id: '',
+                    slug: '',
+                    name: '',
+                    description: '',
+                    created_at: '',
+                    updated_at: ''
+                },
+                species_id: ''
             }
         },
 
@@ -97,12 +109,22 @@
             delete_animal () {
                 this.form.delete('/animal/' + this.currentAnimal.slug);
                 window.location.href = '/animal';
+            },
+            fetchSpecies() {
+                fetch('../list/species')
+                    .then(res => res.json())
+                    .then(res => {
+                        console.log(res);
+                        this.species=res;
+                    })
+
             }
         },
         created() {
             this.edit = this.isEditable;
 
             if(this.edit) {
+                this.fetchSpecies();
                 this.url = '/animal/' + this.currentAnimal.slug;
                 this.form.name = this.currentAnimal.name;
                 this.form.description = this.currentAnimal.description;
@@ -111,6 +133,7 @@
                 this.form.noReset = ['name', 'description', 'species_id'];
             }
             else {
+                this.fetchSpecies();
                 this.url = '/animal';
             }
         }

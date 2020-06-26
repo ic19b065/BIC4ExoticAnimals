@@ -3,14 +3,12 @@
         <!-- <h2>Species</h2> -->
         <table class="table has-background-success is-bordered">
             <tr>
-                <th>ID</th>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Created at</th>
                 <th>Updated at</th>
             </tr>
             <tr v-for="specie in species">
-                <td>{{ specie.id }}</td>
                 <td>{{ specie.name }}</td>
                 <td>{{ specie.description }}</td>
                 <td>{{ specie.created_at | moment('DD.MM.YYYY')}}</td>
@@ -68,8 +66,7 @@
                         this.species=res;
                     })
 
-            },
-
+            }
         }
     }
 </script>
