@@ -7,7 +7,7 @@
         <query-message :success="form.isSuccess()" :fail="form.isFail()"
                        :message="form.failMessage || form.successMessage"></query-message>
         <form @submit.prevent="submit">
-            <div class="field" v-if="!edit">
+            <div class="field">
                 <label class="label" for="name">Name</label>
                 <div class="control">
                     <input id="name"
